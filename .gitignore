@@ -1,0 +1,4 @@
+**/*.o
+os.bin
+os.iso
+*.log
