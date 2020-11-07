@@ -1,4 +1,4 @@
-#include "VGA.h"
+#include "VGA_text.h"
 #include "../../utils/string_utils.h"
 #include "../../utils/serial_ports.h"
 

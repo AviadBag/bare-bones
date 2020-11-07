@@ -1,4 +1,4 @@
-#include "../drivers/VGA/VGA.h"
+#include "../drivers/VGA/VGA_text.h"
 
 void kernel_main(void) 
 {
