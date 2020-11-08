@@ -7,6 +7,6 @@ void kernel_main(void)
 
 	vga_clean_screen();
 
-	// for (int i = 0; i < 501; i++)
-	// 	vga_write_string("Aviad");
+	for (int i = 0; i < 501; i++)
+		vga_write_string("Aviad");
 }
