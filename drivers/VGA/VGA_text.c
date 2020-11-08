@@ -39,7 +39,7 @@ static void move_cursor()
    outb(0x3D5, cursorOffset);      // Send the low cursor byte.
 } 
 
-void vga_put_char_at(char c, size_t row, size_t col) 
+static void vga_put_char_at(char c, size_t row, size_t col) 
 {
 	const size_t index = row * VGA_WIDTH + col;
 	vga_buffer[index] = vga_entry(c);
@@ -54,7 +54,7 @@ void vga_clean_screen()
 	}
 }
 
-char get_char(size_t row, size_t col)
+static static char get_char(size_t row, size_t col)
 {
 	size_t index = row * VGA_WIDTH + col;
 	uint16_t entry = vga_buffer[index];
@@ -63,7 +63,7 @@ char get_char(size_t row, size_t col)
 	return c;
 }
 
-void scroll()
+static void scroll()
 {
 	for (size_t row = 1; row < VGA_HEIGHT; row++) // Start from the second row
 	{
@@ -84,7 +84,7 @@ void scroll()
 /**
  * Scrolls the screen if needed
  */
-void handle_scroll()
+static void handle_scroll()
 {
 	if (vga_row == VGA_HEIGHT) // If we are going to write in the 26 row, which is not exists..
 	{
@@ -93,7 +93,7 @@ void handle_scroll()
 	}
 }
 
-void new_line()
+static void new_line()
 {
 	vga_row++;
 	vga_column = 0;
@@ -102,7 +102,7 @@ void new_line()
 /**
  * Treats a case that a new line is needed
  */
-void handle_line_end()
+static void handle_line_end()
 {
 	if (vga_column == VGA_WIDTH-1) new_line();
 }
@@ -112,7 +112,7 @@ void handle_line_end()
  * Else, returns false.
  * // TODO: Handle other chars
  */
-bool handle_special_chars(char c)
+static bool handle_special_chars(char c)
 {
 	switch (c)
 	{
@@ -125,7 +125,7 @@ bool handle_special_chars(char c)
 	}
 }
 
-void vga_put_char(char c)
+static void vga_put_char(char c)
 {	
 	handle_line_end();
 	handle_scroll();
