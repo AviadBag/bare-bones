@@ -26,4 +26,4 @@ static const size_t VGA_HEIGHT = 25;
 static const size_t LAST_ROW = VGA_HEIGHT - 1;
 
 void vga_initialize();
-void vga_write_string(const char* data) ;
+void vga_write_string(const char* data);

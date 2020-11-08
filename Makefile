@@ -41,3 +41,4 @@ clean:
 	find . -name \*.bin -type f -delete 
 	rm -rf -f isodir
 	rm -f os.iso
+	rm *.log
