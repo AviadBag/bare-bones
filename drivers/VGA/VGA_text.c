@@ -43,22 +43,6 @@ void vga_clean_screen()
 		}
 	}
 }
- 
-void vga_set_color(uint8_t color) 
-{
-	vga_default_color = color;
-}
-
-void log(char c)
-{
-	outb(0x3F8, c);
-}
-
-void log_string(char* str)
-{
-	int len = strlen(str);
-	for (int i = 0; i < len; i++) log(str[i]);
-}
 
 char get_char(size_t row, size_t col)
 {
