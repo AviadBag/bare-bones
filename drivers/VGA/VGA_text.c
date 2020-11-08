@@ -43,6 +43,15 @@ static void move_cursor()
 } 
 
 /**
+ * Puts a char in a certain place
+ */
+static void vga_put_char_at(char c, size_t row, size_t col) 
+{
+	const size_t index = row * VGA_WIDTH + col;
+	vga_buffer[index] = vga_entry(c);
+}
+
+/**
  * Cleanse up the screen
  */
 void vga_clean_screen()
@@ -143,8 +152,7 @@ static void vga_put_char(char c)
 	handle_scroll();
 	if (handle_special_chars(c)) return; // We have already treated the special char
 
-    const size_t index = vga_row * VGA_WIDTH + vga_col;
-	vga_buffer[index] = vga_entry(c);
+    vga_put_char_at(c, vga_row, vga_column);
 	
 	vga_column++; // Go to next char
 	move_cursor(); // Move cursor to next column
