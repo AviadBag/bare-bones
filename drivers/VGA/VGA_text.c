@@ -27,10 +27,19 @@ void vga_initialize(void)
 	vga_column = 0;
 	vga_default_color = vga_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
 	vga_buffer = (uint16_t*) 0xB8000;
-	for (size_t y = 0; y < VGA_HEIGHT; y++) { // Empty the screen
-		for (size_t x = 0; x < VGA_WIDTH; x++) {
-			const size_t index = y * VGA_WIDTH + x;
-			vga_buffer[index] = vga_entry(' ');
+}
+
+void vga_put_char_at(char c, size_t row, size_t col) 
+{
+	const size_t index = row * VGA_WIDTH + col;
+	vga_buffer[index] = vga_entry(c);
+}
+
+void vga_clean_screen()
+{
+	for (size_t row = 0; row < VGA_HEIGHT; row++) { // Empty the screen
+		for (size_t column = 0; column < VGA_WIDTH; column++) {
+			vga_put_char_at(' ', row, column);
 		}
 	}
 }
@@ -38,12 +47,6 @@ void vga_initialize(void)
 void vga_set_color(uint8_t color) 
 {
 	vga_default_color = color;
-}
-
-void vga_put_char_at(char c, size_t row, size_t col) 
-{
-	const size_t index = row * VGA_WIDTH + col;
-	vga_buffer[index] = vga_entry(c);
 }
 
 void log(char c)
