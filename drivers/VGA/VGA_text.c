@@ -29,6 +29,16 @@ void vga_initialize(void)
 	vga_buffer = (uint16_t*) 0xB8000;
 }
 
+static void move_cursor()
+{
+   // The screen is 80 characters wide...
+   uint16_t cursorOffset = vga_row * 80 + vga_column;
+   outb(0x3D4, 14);                  // Tell the VGA board we are setting the high cursor byte.
+   outb(0x3D5, cursorOffset >> 8); // Send the high cursor byte.
+   outb(0x3D4, 15);                  // Tell the VGA board we are setting the low cursor byte.
+   outb(0x3D5, cursorOffset);      // Send the low cursor byte.
+} 
+
 void vga_put_char_at(char c, size_t row, size_t col) 
 {
 	const size_t index = row * VGA_WIDTH + col;
@@ -122,11 +132,15 @@ void vga_put_char(char c)
 	if (handle_special_chars(c)) return; // We have already treated the special char
 
     vga_put_char_at(c, vga_row, vga_column);
+	
 	vga_column++; // Go to next char
+	move_cursor(); // Move cursor to next column
 }
  
 void vga_write_string(const char* str) 
 {
 	for (size_t i = 0; i < strlen(str); i++)
+	{
 		vga_put_char(str[i]);
+	}
 }
