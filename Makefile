@@ -2,7 +2,7 @@ C_SOURCES_DIRS = kernel drivers utils
 C_HEADERS_DIRS = kernel drivers utils
 
 C_SOURCES = $(shell find $(C_SOURCES_DIRS) -name '*.c')
-HEADERS = $(shell find $(C_HEADERS_DIRS) -name '*.h')
+C_HEADERS = $(shell find $(C_HEADERS_DIRS) -name '*.h')
 
 C_OBJ = ${C_SOURCES:.c=.o}
 
@@ -33,7 +33,7 @@ os.bin: boot/boot.o ${C_OBJ}
 boot/boot.o: boot/boot.s
 	~/opt/cross/bin/./i686-elf-as boot/boot.s -o $@
 
-%.o : %.c ${HEADERS}
+%.o : %.c ${C_HEADERS}
 	~/opt/cross/bin/./i686-elf-gcc $< -o $@ ${GCC_FLAGS} ${GCC_DEBUG_FLAG}
 
 clean:
