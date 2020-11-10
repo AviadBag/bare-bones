@@ -10,7 +10,7 @@ void kernel_main(void)
 
 	for (int i = 0; i < 501; i++)
 	{
-		char* str;
+		char* str = "   ";
 		itoa(i, str, 10);
 		vga_write_string(str);
 		vga_write_string("\n");

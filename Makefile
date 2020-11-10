@@ -1,3 +1,6 @@
+# ----------------
+# C
+# ----------------
 C_SOURCES_DIRS = kernel drivers utils
 C_HEADERS_DIRS = kernel drivers utils
 
@@ -6,6 +9,16 @@ C_HEADERS = $(shell find $(C_HEADERS_DIRS) -name '*.h')
 
 C_OBJ = ${C_SOURCES:.c=.o}
 
+# ----------------
+# Assembly
+# ----------------
+ASM_SOURCES_DIRS = kernel drivers utils # Not including the boot assembly file.
+ASM_SOURCES = $(shell find $(ASM_SOURCES_DIRS) -name '*.asm')
+ASM_OBJ = ${ASM_SOURCES:.asm=.o}
+
+# ----------------
+# Another flags
+# ----------------
 GCC_DEBUG_FLAG = -g
 GCC_FLAGS = -std=gnu99 -ffreestanding -O2 -Wall -Wextra -c -O1
 GCC_LINK_FLAGS = -T config/linker.ld -ffreestanding -O2 -nostdlib $^ -lgcc
@@ -37,7 +50,7 @@ os.iso: os.bin config/grub.cfg
 # ----------------
 # Compile
 # ----------------
-os.bin: boot/boot.o ${C_OBJ} # Depends on boot.o and all of the c object files
+os.bin: boot/boot.o ${ASM_OBJ} ${C_OBJ}
 	${GCC_PATH} -o $@ ${GCC_LINK_FLAGS} ${GCC_DEBUG_FLAG}
 
 boot/boot.o: boot/boot.s
@@ -45,6 +58,9 @@ boot/boot.o: boot/boot.s
 
 %.o : %.c ${C_HEADERS} # Depends on the c file, and all the c headers.
 	${GCC_PATH} $< -o $@ ${GCC_FLAGS} ${GCC_DEBUG_FLAG}
+
+%.o: %.asm
+	${ASSEMBLER_PATH} $< -o $@
 
 # ----------------
 # Clean
