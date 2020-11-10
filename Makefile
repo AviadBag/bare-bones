@@ -17,19 +17,29 @@ ASM_SOURCES = $(shell find $(ASM_SOURCES_DIRS) -name '*.asm')
 ASM_OBJ = ${ASM_SOURCES:.asm=.o}
 
 # ----------------
-# Another flags
+# Flags
 # ----------------
 GCC_DEBUG_FLAG = -g
 GCC_FLAGS = -std=gnu99 -ffreestanding -O2 -Wall -Wextra -c -O1
 GCC_LINK_FLAGS = -T config/linker.ld -ffreestanding -O2 -nostdlib $^ -lgcc
 
+NASM_FLAGS = -felf32
+
 QEMU_FLAGS = -serial file:serial.log
 QEMU_DEBUG_FLAGS = -s -S
 
+# ----------------
+# Paths
+# ----------------
 COMPILERS_DIR_PATH = ~/opt/cross/bin
 GCC_PATH = ${COMPILERS_DIR_PATH}/./i686-elf-gcc
-ASSEMBLER_PATH = ${COMPILERS_DIR_PATH}/./i686-elf-as
+GNU_ASSEMBLER_PATH = ${COMPILERS_DIR_PATH}/./i686-elf-as
 
+NASM_PATH = nasm
+
+# ----------------
+# Rules
+# ----------------
 all: os.iso
 
 run: os.iso
@@ -54,13 +64,13 @@ os.bin: boot/boot.o ${ASM_OBJ} ${C_OBJ}
 	${GCC_PATH} -o $@ ${GCC_LINK_FLAGS} ${GCC_DEBUG_FLAG}
 
 boot/boot.o: boot/boot.s
-	${ASSEMBLER_PATH} boot/boot.s -o $@
+	${GNU_ASSEMBLER_PATH} boot/boot.s -o $@
 
 %.o : %.c ${C_HEADERS} # Depends on the c file, and all the c headers.
 	${GCC_PATH} $< -o $@ ${GCC_FLAGS} ${GCC_DEBUG_FLAG}
 
 %.o: %.asm
-	${ASSEMBLER_PATH} $< -o $@
+	${NASM_PATH} ${NASM_FLAGS} $< -o $@
 
 # ----------------
 # Clean
