@@ -37,8 +37,7 @@ boot/boot.o: boot/boot.s
 	~/opt/cross/bin/./i686-elf-gcc $< -o $@ ${GCC_FLAGS} ${GCC_DEBUG_FLAG}
 
 clean:
-	find . -name \*.c_o -type f -delete 
-	find . -name \*.asm_o -type f -delete 
+	find . -name \*.o -type f -delete 
 	find . -name \*.bin -type f -delete 
 	rm -rf -f isodir
 	rm -f os.iso
