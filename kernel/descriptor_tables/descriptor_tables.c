@@ -1,4 +1,5 @@
-//
+#include "../../drivers/VGA/VGA_text.h"
+
 // descriptor_tables.c - Initialises the GDT and IDT, and defines the
 // default ISR and IRQ handler.
 // Based on code from Bran's kernel development tutorials.
@@ -21,7 +22,9 @@ gdt_ptr_t   gdt_ptr;
 void init_descriptor_tables()
 {
    // Initialise the global descriptor table.
-   init_gdt();
+    vga_write_string("Init-ing GDT...\n");
+    init_gdt();
+    vga_write_string("GDT was init-ed successfully!\n");
 }
 
 static void init_gdt()
@@ -35,7 +38,7 @@ static void init_gdt()
    gdt_set_entry(3, 0, 0xFFFFFFFF, 0xFA, 0xCF); // User mode code segment
    gdt_set_entry(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
 
-   gdt_flush((uint32_t) & gdt_ptr);
+    gdt_flush((uint32_t) & gdt_ptr);
 }
 
 // Set the value of one GDT entry.
