@@ -1,4 +1,5 @@
-**/*.o
+**/*.asm_o
+**/*.c_o
 os.bin
 os.iso
 *.log
