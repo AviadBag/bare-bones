@@ -14,7 +14,7 @@ void isr_handler(registers_t regs)
    vga_write_string("recieved interrupt: ");
 
    char* interruptNumber = "   ";
-   itoa(regs.int_no, interruptNumber, 10);
+   itoa(regs.interrupt_number, interruptNumber, 10);
    vga_write_string(interruptNumber);
 
    vga_write_string("\n");
