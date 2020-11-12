@@ -1,6 +1,7 @@
 #include "../drivers/VGA/VGA_text.h"
 #include "../utils/int_utils.h"
 #include "descriptor_tables/gdt.h"
+#include "descriptor_tables/idt.h"
 
 void kernel_main(void) 
 {	
@@ -8,12 +9,8 @@ void kernel_main(void)
 	vga_clean_screen();
 
 	init_gdt();
+	init_idt();
 
-	for (int i = 0; i < 501; i++)
-	{
-		char* str = "   ";
-		itoa(i, str, 10);
-		vga_write_string(str);
-		vga_write_string("\n");
-	}
+	asm volatile ("int $0x3");
+	asm volatile ("int $0x4");
 }

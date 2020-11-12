@@ -3,11 +3,11 @@
 // A struct describing an interrupt gate.
 struct idt_entry_struct
 {
-    uint16_t address_low;               // The lower 16 bits of the address to jump to when this interrupt fires.
-    uint16_t sel;                       // Kernel segment selector.
+    uint16_t base_low;                  // The lower 16 bits of the address to jump to when this interrupt fires.
+    uint16_t selector;                  // Kernel segment selector.
     uint8_t  always0;                   // This must always be zero.
     uint8_t  flags;                     // More flags. See documentation.
-    uint16_t address_high;              // The upper 16 bits of the address to jump to.
+    uint16_t base_high;                 // The upper 16 bits of the address to jump to.
 } __attribute__((packed));
 typedef struct idt_entry_struct idt_entry_t;
 
@@ -54,3 +54,5 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+
+void init_idt();
