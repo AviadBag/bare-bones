@@ -28,7 +28,9 @@ void init_gdt()
    vga_write_string("GDT was initialized successfully!\n");
 }
 
-// Set the value of one GDT entry.
+/**
+ * This method adds a new gdt entry to the table
+ */
 static void gdt_set_entry(int32_t index, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
    gdt_entries[index].base_low    = (base & 0xFFFF);
