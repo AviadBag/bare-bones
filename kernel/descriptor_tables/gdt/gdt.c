@@ -1,4 +1,4 @@
-#include "../../drivers/VGA/VGA_text.h"
+#include "../../../drivers/VGA/VGA_text.h"
 #include "gdt.h"
 
 // Lets us access our ASM functions from our C code.

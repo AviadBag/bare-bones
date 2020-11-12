@@ -1,7 +1,7 @@
 #include "../drivers/VGA/VGA_text.h"
 #include "../utils/int_utils.h"
-#include "descriptor_tables/gdt.h"
-#include "descriptor_tables/idt.h"
+#include "descriptor_tables/gdt/gdt.h"
+#include "descriptor_tables/idt/idt.h"
 
 void kernel_main(void) 
 {	

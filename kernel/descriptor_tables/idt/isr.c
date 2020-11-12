@@ -5,8 +5,8 @@
 //
 
 #include "isr.h"
-#include "../../drivers/VGA/VGA_text.h"
-#include "../../utils/int_utils.h"
+#include "../../../drivers/VGA/VGA_text.h"
+#include "../../../utils/int_utils.h"
 
 // This gets called from our ASM interrupt handler stub.
 void isr_handler(registers_t regs)
