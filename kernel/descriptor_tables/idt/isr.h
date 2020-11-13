@@ -23,11 +23,9 @@ typedef struct registers
 #define IRQ11 43
 #define IRQ12 44
 #define IRQ13 45
-#define IRQ14 46.
+#define IRQ14 46
 #define IRQ15 47
 
-// Enables registration of callbacks for interrupts or IRQs.
-// For IRQs, to ease confusion, use the #defines above as the
-// first parameter.
+// isr_t will be typedef of a pointer to a void function which gets registers_t.
 typedef void (*isr_t)(registers_t);
-void register_interrupt_handler(uint8_t n, isr_t handler);
+void register_interrupt_handler(uint8_t interrupt_number, isr_t handler);

@@ -27,6 +27,15 @@ void init_idt()
 }
 
 /**
+ * This method inits the idt pointer
+ */
+static void init_idt_pointer()
+{
+    idt_ptr.size = sizeof(idt_entry_t) * 256 - 1;
+    idt_ptr.base = (uint32_t)&idt_entries;
+}
+
+/**
  * This method remaps the IRQ iterrupts to interrupts 32-47
  */
 void remap_irq()
@@ -41,15 +50,6 @@ void remap_irq()
     outb(0xA1, 0x01);
     outb(0x21, 0x0);
     outb(0xA1, 0x0);
-}
-
-/**
- * This method inits the idt pointer
- */
-static void init_idt_pointer()
-{
-    idt_ptr.size = sizeof(idt_entry_t) * 256 - 1;
-    idt_ptr.base = (uint32_t)&idt_entries;
 }
 
 /**
@@ -117,14 +117,14 @@ static void init_idt_irq_entries()
 /**
  * This method adds a new idt entry to the table
  */
-static void set_idt_entry(uint8_t index, uint32_t base, uint16_t selector, uint8_t flags)
+static void set_idt_entry(uint8_t interrupt_number, uint32_t base, uint16_t selector, uint8_t flags)
 {
-    idt_entries[index].base_low = base & 0xFFFF;
-    idt_entries[index].base_high = (base >> 16) & 0xFFFF;
+    idt_entries[interrupt_number].base_low = base & 0xFFFF;
+    idt_entries[interrupt_number].base_high = (base >> 16) & 0xFFFF;
 
-    idt_entries[index].selector = selector;
-    idt_entries[index].always0 = 0;
+    idt_entries[interrupt_number].selector = selector;
+    idt_entries[interrupt_number].always0 = 0;
     // We must uncomment the OR below when we get to using user-mode.
     // It sets the interrupt gate's privilege level to 3.
-    idt_entries[index].flags = flags /* | 0x60 */;
+    idt_entries[interrupt_number].flags = flags /* | 0x60 */;
 }

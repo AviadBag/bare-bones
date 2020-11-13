@@ -47,16 +47,16 @@ static void init_gdt_entries()
 /**
  * This method adds a new gdt entry to the table
  */
-static void set_gdt_entry(int32_t index, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
+static void set_gdt_entry(int32_t interrupt_number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
-   gdt_entries[index].base_low    = (base & 0xFFFF);
-   gdt_entries[index].base_middle = (base >> 16) & 0xFF;
-   gdt_entries[index].base_high   = (base >> 24) & 0xFF;
+   gdt_entries[interrupt_number].base_low    = (base & 0xFFFF);
+   gdt_entries[interrupt_number].base_middle = (base >> 16) & 0xFF;
+   gdt_entries[interrupt_number].base_high   = (base >> 24) & 0xFF;
 
-   gdt_entries[index].limit_low   = (limit & 0xFFFF);
+   gdt_entries[interrupt_number].limit_low   = (limit & 0xFFFF);
 
-   gdt_entries[index].flags = (limit >> 16) & 0x0F;
-   gdt_entries[index].flags |= gran & 0xF0;
+   gdt_entries[interrupt_number].flags = (limit >> 16) & 0x0F;
+   gdt_entries[interrupt_number].flags |= gran & 0xF0;
 
-   gdt_entries[index].access      = access;
+   gdt_entries[interrupt_number].access      = access;
 }

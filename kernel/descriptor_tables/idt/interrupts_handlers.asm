@@ -60,7 +60,7 @@ irq_common_stub:
   isr%1:
     cli ; Disable iterruptes
     push byte 0
-    push byte %1
+    push byte %1 ; Push the interrupt number, so we will know what happened
     jmp isr_common_stub
 %endmacro
 
@@ -68,18 +68,18 @@ irq_common_stub:
   [GLOBAL isr%1]
   isr%1:
     cli ; Disable iterruptes
-    push byte %1
+    push byte %1 ; Push the interrupt number, so we will know what happened
     jmp isr_common_stub
 %endmacro
 
 ; This macro creates a stub for an IRQ - the first parameter is
-; IRQ number, the second parameter is the interrupt number.
+; IRQ (callback) number, the second parameter is the interrupt number.
 %macro IRQ 2
   global irq%1
   irq%1:
     cli
     push byte 0
-    push byte %2
+    push byte %2 ; Push the interrupt number, so we will know what happened
     jmp irq_common_stub
 %endmacro
 
