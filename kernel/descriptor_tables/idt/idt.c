@@ -5,7 +5,8 @@ extern void idt_flush(uint32_t);
 
 static void set_idt_entry(uint8_t, uint32_t, uint16_t, uint8_t);
 static void init_idt_pointer();
-static void init_idt_entries();
+static void init_idt_reserved_entries();
+static void init_idt_irq_entries();
 
 idt_entry_t idt_entries[256];
 idt_ptr_t idt_ptr;
@@ -15,10 +16,31 @@ void init_idt()
     vga_write_string("Initializing IDT...\n");
     
     init_idt_pointer();
-    init_idt_entries();
+
+    remap_irq();
+    init_idt_reserved_entries();
+    init_idt_irq_entries();
+
     idt_flush((uint32_t)&idt_ptr);
 
     vga_write_string("IDT was initialized successfully!\n");
+}
+
+/**
+ * This method remaps the IRQ iterrupts to interrupts 32-47
+ */
+void remap_irq()
+{
+    outb(0x20, 0x11);
+    outb(0xA0, 0x11);
+    outb(0x21, 0x20);
+    outb(0xA1, 0x28);
+    outb(0x21, 0x04);
+    outb(0xA1, 0x02);
+    outb(0x21, 0x01);
+    outb(0xA1, 0x01);
+    outb(0x21, 0x0);
+    outb(0xA1, 0x0);
 }
 
 /**
@@ -31,9 +53,9 @@ static void init_idt_pointer()
 }
 
 /**
- * This method inserts all the ide entries into the table
+ * This method inserts all the ide entries which are reserved for the CPU into the table
  */
-static void init_idt_entries()
+static void init_idt_reserved_entries()
 {
     set_idt_entry(0, (uint32_t)isr0, 0x08, 0x8E);
     set_idt_entry(1, (uint32_t)isr1, 0x08, 0x8E);
@@ -67,6 +89,29 @@ static void init_idt_entries()
     set_idt_entry(29, (uint32_t)isr29, 0x08, 0x8E);
     set_idt_entry(30, (uint32_t)isr30, 0x08, 0x8E);
     set_idt_entry(31, (uint32_t)isr31, 0x08, 0x8E);
+}
+
+/**
+ * This method inits the irq interrupts entries
+ */
+static void init_idt_irq_entries()
+{
+    set_idt_entry(32, (uint32_t)irq0, 0x08, 0x8E);
+    set_idt_entry(33, (uint32_t)irq1, 0x08, 0x8E);
+    set_idt_entry(34, (uint32_t)irq2, 0x08, 0x8E);
+    set_idt_entry(35, (uint32_t)irq3, 0x08, 0x8E);
+    set_idt_entry(36, (uint32_t)irq4, 0x08, 0x8E);
+    set_idt_entry(37, (uint32_t)irq5, 0x08, 0x8E);
+    set_idt_entry(38, (uint32_t)irq6, 0x08, 0x8E);
+    set_idt_entry(39, (uint32_t)irq7, 0x08, 0x8E);
+    set_idt_entry(40, (uint32_t)irq8, 0x08, 0x8E);
+    set_idt_entry(41, (uint32_t)irq9, 0x08, 0x8E);
+    set_idt_entry(42, (uint32_t)irq10, 0x08, 0x8E);
+    set_idt_entry(43, (uint32_t)irq11, 0x08, 0x8E);
+    set_idt_entry(44, (uint32_t)irq12, 0x08, 0x8E);
+    set_idt_entry(45, (uint32_t)irq13, 0x08, 0x8E);
+    set_idt_entry(46, (uint32_t)irq14, 0x08, 0x8E);
+    set_idt_entry(47, (uint32_t)irq15, 0x08, 0x8E);
 }
 
 /**
