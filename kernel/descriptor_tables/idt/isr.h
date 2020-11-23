@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#include "../../include/registers.h"
+#include "../../../include/registers.h"
 
 // A few defines to make life a little easier
 #define IRQ0 32

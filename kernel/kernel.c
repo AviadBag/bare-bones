@@ -5,7 +5,7 @@
 
 void kernel_main(void) 
 {	
-	vga_initialize();
+	initialize_vga();
 	vga_clean_screen();
 
 	init_gdt();

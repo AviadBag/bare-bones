@@ -12,9 +12,7 @@ idt_entry_t idt_entries[256];
 idt_ptr_t idt_ptr;
 
 void init_idt()
-{
-    vga_write_string("Initializing IDT...\n");
-    
+{    
     init_idt_pointer();
 
     remap_irq();
@@ -22,8 +20,6 @@ void init_idt()
     init_idt_irq_entries();
 
     idt_flush((uint32_t)&idt_ptr);
-
-    vga_write_string("IDT was initialized successfully!\n");
 }
 
 /**

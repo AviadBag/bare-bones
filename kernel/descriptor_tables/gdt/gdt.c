@@ -1,4 +1,3 @@
-#include "../../../drivers/VGA/VGA_text.h"
 #include "gdt.h"
 
 // Lets us access our ASM functions from our C code.
@@ -14,13 +13,9 @@ gdt_ptr_t   gdt_ptr;
 
 void init_gdt()
 {
-   vga_write_string("Initializing GDT...\n");
-
    init_gdt_pointer();
    init_gdt_entries();
    gdt_flush((uint32_t) & gdt_ptr);
-
-   vga_write_string("GDT was initialized successfully!\n");
 }
 
 /**
