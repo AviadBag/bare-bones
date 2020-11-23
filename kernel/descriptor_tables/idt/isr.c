@@ -23,7 +23,7 @@ void isr_handler(registers_t regs)
 	vga_write_string(interruptNumber);
 	vga_write_string("\n");
 
-	if (interrupt_handlers[regs.interrupt_number] != 0)
+	if (interrupt_handlers[regs.interrupt_number])
 	{
 		isr_t handler = interrupt_handlers[regs.interrupt_number];
 		handler(regs);

@@ -23,12 +23,12 @@ void init_idt()
 }
 
 /**
- * This method inits the idt pointer
+ * This method inits the pointer to the IDT table.
  */
 static void init_idt_pointer()
 {
     idt_ptr.size = sizeof(idt_entry_t) * 256 - 1;
-    idt_ptr.base = (uint32_t)&idt_entries;
+    idt_ptr.base = (uint32_t) & idt_entries;
 }
 
 /**
@@ -49,7 +49,7 @@ void remap_irq()
 }
 
 /**
- * This method inserts all the ide entries which are reserved for the CPU into the table
+ * This method inserts all the IDT entries which are reserved for the CPU into the table
  */
 static void init_idt_reserved_entries()
 {

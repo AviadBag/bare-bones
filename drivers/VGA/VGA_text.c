@@ -21,7 +21,7 @@ static inline uint16_t vga_entry(unsigned char c)
 	return (uint16_t) c | (uint16_t) vga_default_color << 8;
 }
 
-void initialize_vga(void) 
+void vga_initialize(void) 
 {
 	vga_row = 0;
 	vga_column = 0;

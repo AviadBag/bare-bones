@@ -1,3 +1,6 @@
+#ifndef REGISTERS_H
+#define REGISTERS_H
+
 typedef struct registers
 {
    uint32_t ds;                                     // Data segment selector
@@ -5,3 +8,5 @@ typedef struct registers
    uint32_t interrupt_number, error_code;           // Interrupt number and error code (if applicable)
    uint32_t eip, cs, eflags, useresp, ss;           // Pushed by the processor automatically.
 } registers_t;
+
+#endif

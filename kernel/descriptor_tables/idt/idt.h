@@ -1,3 +1,6 @@
+#ifndef IDT_H
+#define IDT_H
+
 #include <stdint.h>
 
 // A struct describing an interrupt gate.
@@ -73,3 +76,5 @@ extern void irq14();
 extern void irq15();
 
 void init_idt();
+
+#endif

@@ -19,7 +19,7 @@ void init_gdt()
 }
 
 /**
- * This method inits the gdt pointer
+ * This method inits the pointer to the gdt table
  */
 static void init_gdt_pointer()
 {

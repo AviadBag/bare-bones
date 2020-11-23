@@ -1,3 +1,6 @@
+#ifndef ISR_H
+#define ISR_H
+
 #include <stdint.h>
 
 #include "../../../include/registers.h"
@@ -23,3 +26,5 @@
 // isr_t will be typedef of a pointer to a void function which gets registers_t.
 typedef void (*isr_t)(registers_t);
 void register_interrupt_handler(uint8_t interrupt_number, isr_t handler);
+
+#endif
