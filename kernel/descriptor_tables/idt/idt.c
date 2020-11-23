@@ -1,8 +1,10 @@
 #include "../../../drivers/VGA/VGA_text.h"
+#include "../../../utils/serial_ports.h"
 #include "idt.h"
 
 extern void idt_flush(uint32_t);
 
+static void remap_irq();
 static void set_idt_entry(uint8_t, uint32_t, uint16_t, uint8_t);
 static void init_idt_pointer();
 static void init_idt_reserved_entries();
@@ -34,7 +36,7 @@ static void init_idt_pointer()
 /**
  * This method remaps the IRQ iterrupts to interrupts 32-47
  */
-void remap_irq()
+static void remap_irq()
 {
     outb(0x20, 0x11);
     outb(0xA0, 0x11);
