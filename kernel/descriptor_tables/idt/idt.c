@@ -22,6 +22,8 @@ void init_idt()
     init_idt_irq_entries();
 
     idt_flush((uint32_t)&idt_ptr);
+
+    asm("sti"); // Enable Interrupts
 }
 
 /**
