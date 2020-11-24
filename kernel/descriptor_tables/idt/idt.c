@@ -38,16 +38,16 @@ static void init_idt_pointer()
  */
 static void remap_irq()
 {
-    outb(0x20, 0x11);
-    outb(0xA0, 0x11);
-    outb(0x21, 0x20);
-    outb(0xA1, 0x28);
-    outb(0x21, 0x04);
-    outb(0xA1, 0x02);
-    outb(0x21, 0x01);
-    outb(0xA1, 0x01);
-    outb(0x21, 0x0);
-    outb(0xA1, 0x0);
+    outb(PIC1_COMMAND, ICW1);
+    outb(PIC2_COMMAND, ICW1);
+    outb(PIC1_DATA, PIC1_OFFSET); // ICW2
+    outb(PIC2_DATA, PIC2_OFFSET); // ICW2
+    outb(PIC1_DATA, PIC1_ICW3);
+    outb(PIC2_DATA, PIC2_ICW3);
+    outb(PIC1_DATA, MODE_8086); // ICW4
+    outb(PIC2_DATA, MODE_8086); // ICW4
+    outb(PIC1_DATA, 0x0); // Enable all IRQ's
+    outb(PIC2_DATA, 0x0); // Enable all IRQ's
 }
 
 /**

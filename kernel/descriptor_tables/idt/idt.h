@@ -3,6 +3,20 @@
 
 #include <stdint.h>
 
+#define PIC1		    0x20		/* IO base address for master PIC */
+#define PIC2		    0xA0		/* IO base address for slave PIC */
+#define PIC1_COMMAND	PIC1
+#define PIC1_DATA	    (PIC1+1)
+#define PIC2_COMMAND	PIC2
+#define PIC2_DATA	    (PIC2+1)
+
+#define ICW1 0x11
+#define PIC1_OFFSET 0x20 // ICW2
+#define PIC2_OFFSET 0x28 // ICW2
+#define PIC1_ICW3 0x4
+#define PIC2_ICW3 0x2
+#define MODE_8086 0x1 // ICW4
+
 // A struct describing an interrupt gate.
 struct idt_entry_struct
 {
