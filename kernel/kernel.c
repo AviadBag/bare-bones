@@ -6,10 +6,14 @@
 
 void kernel_main(void) 
 {	
+	asm("sti");
+
 	vga_initialize();
 	vga_clean_screen();
 
 	init_gdt();
 	init_idt();
 	init_timer(100);
+
+	while (1) {}
 }

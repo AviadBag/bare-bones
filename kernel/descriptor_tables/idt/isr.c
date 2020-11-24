@@ -3,8 +3,6 @@
 //
 
 #include "isr.h"
-#include "../../../drivers/VGA/VGA_text.h"
-#include "../../../utils/int_utils.h"
 #include "../../../utils/serial_ports.h"
 
 isr_t interrupt_handlers[256];
@@ -17,12 +15,6 @@ void register_interrupt_handler(uint8_t interrupt_number, isr_t handler)
 // This gets called from our ASM interrupt handler stub.
 void isr_handler(registers_t regs)
 {
-	vga_write_string("recieved interrupt: ");
-	char *interruptNumber = "   ";
-	itoa(regs.interrupt_number, interruptNumber, 10);
-	vga_write_string(interruptNumber);
-	vga_write_string("\n");
-
 	if (interrupt_handlers[regs.interrupt_number])
 	{
 		isr_t handler = interrupt_handlers[regs.interrupt_number];
@@ -33,7 +25,6 @@ void isr_handler(registers_t regs)
 // This gets called from our ASM interrupt handler stub.
 void irq_handler(registers_t regs)
 {
-	vga_write_string("GOT IRQ\n");
 	// Send an EOI (end of interrupt) signal to the PICs.
 	// If this interrupt involved the slave.
 	if (regs.interrupt_number >= 40)

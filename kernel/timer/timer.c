@@ -13,6 +13,7 @@ uint32_t ticks_counter = 0;
 static void timer_callback(registers_t regs)
 {
     ticks_counter++;
+    
     vga_write_string("Tick: ");
     char *ticks_counter_str = "     ";
     itoa(ticks_counter, ticks_counter_str, 10);
