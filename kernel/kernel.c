@@ -2,7 +2,6 @@
 #include "../utils/int_utils.h"
 #include "descriptor_tables/gdt/gdt.h"
 #include "descriptor_tables/idt/idt.h"
-#include "timer/timer.h"
 
 void kernel_main(void) 
 {	

@@ -2,23 +2,24 @@
 // Written for JamesM's kernel development tutorials.
 
 #include "timer.h"
-#include "../descriptor_tables/idt/isr.h"
-#include "../../drivers/VGA/VGA_text.h"
+#include "../../kernel/descriptor_tables/idt/isr.h"
+#include "../VGA/VGA_text.h"
 #include "../../include/registers.h"
 #include "../../utils/serial_ports.h"
 #include "../../utils/int_utils.h"
 
 uint32_t ticks_counter = 0;
+timer_callback_t callback = 0;
 
 static void timer_callback(registers_t regs)
 {
     ticks_counter++;
-    
-    vga_write_string("Tick: ");
-    char *ticks_counter_str = "     ";
-    itoa(ticks_counter, ticks_counter_str, 10);
-    vga_write_string(ticks_counter_str);
-    vga_write_string("\n");
+    if (callback) callback(ticks_counter);
+}
+
+void register_timer_callback(timer_callback_t c)
+{
+    callback = c;
 }
 
 void init_timer(uint32_t frequency)
